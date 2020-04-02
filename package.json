@@ -3,14 +3,24 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "dev": " DEBUG=backend-blog:* nodemon www/bin"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "express": "~4.16.1",
-    "hbs": "~4.0.4",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.16.4",
+    "hbs": "^4.0.6",
+    "http-errors": "^1.6.3",
+    "mongoose": "^5.9.7",
+    "morgan": "~1.9.1",
+    "node-sass": "^4.13.1",
+    "node-sass-middleware": "^0.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-react": "^7.19.0",
+    "nodemon": "^2.0.2"
   }
 }

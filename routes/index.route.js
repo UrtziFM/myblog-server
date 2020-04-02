@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/ping', function(req, res, next) {
+  res.status(200).send('Server is alive')
+})
+
 module.exports = router;
