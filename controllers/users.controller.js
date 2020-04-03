@@ -29,13 +29,13 @@ const getUsers = (req, res, next) => {
   const createUser = (req, res, next) => {
   const newUser = new User({
   
-    user = req.body.user,
-    password = req.body.password,
-    name = req.body.name,
-    email = req.body.email,
-    gender = req.body.gender,
-    date = req.body.date,
-    age = req.body.age,
+    user : req.body.user,
+    password : req.body.password,
+    name : req.body.name,
+    email : req.body.email,
+    gender : req.body.gender,
+    date : req.body.date,
+    age : req.body.age,
 })
     newUser
     .save()

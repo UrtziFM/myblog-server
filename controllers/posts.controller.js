@@ -4,7 +4,7 @@ const Post = require ('../model/Post');
 
 const getPosts = (req, res, next) => {
     Post.find()
-      .then(books => {
+      .then(posts => {
         res.status(200).render('posts', { posts: posts })
       })
       .catch(err => {
@@ -29,16 +29,16 @@ const getPosts = (req, res, next) => {
   const createPost = (req, res, next) => {
   const newPost = new Post({
   
-    title = req.body.title,
-    url = req.body.url,
-    picture = req.body.picture,
-    description = req.body.description,
-    contentPost = req.body.contentPost,
-    category = req.body.category,
-    date = req.body.date,
-    postit = req.body.postit,
-    likes = req.body.likes,
-    views = req.body.views,
+    title : req.body.title,
+    url : req.body.url,
+    picture : req.body.picture,
+    description : req.body.description,
+    contentPost : req.body.contentPost,
+    category : req.body.category,
+    date : req.body.date,
+    postit : req.body.postit,
+    likes : req.body.likes,
+    views : req.body.views,
 })
     newPost
     .save()
