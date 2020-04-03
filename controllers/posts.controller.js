@@ -75,7 +75,7 @@ const editPost = (req, res, next) => {
   const deletePost = (req, res, next) => {
     const id = req.params.id
   
-    Book.findByIdAndDelete(id)
+    Post.findByIdAndDelete(id)
       .then(() => {
         res.status(200).json('Deleted post!')
       })

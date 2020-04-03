@@ -1,0 +1,15 @@
+<h3>Create a new book</h3>
+<form method="POST" action="/books/new">
+  <input name="name" type="text" placeholder="Book name" />
+  <input name="year" type="number" placeholder="Book year" />
+  <button type="submit">Create book</button>
+</form>
+
+<h3>These are all our books:</h3>
+<ul>
+  {{#each books}}
+  <li>
+    <p class="book-name">{{this.name}} - {{this.year}}</p><a href="books/{{this.id}}">Edit</a>
+  </li>
+  {{/each}}
+</ul>
