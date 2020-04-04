@@ -1,15 +1,15 @@
-<h3>Create a new book</h3>
-<form method="POST" action="/books/new">
-  <input name="name" type="text" placeholder="Book name" />
-  <input name="year" type="number" placeholder="Book year" />
-  <button type="submit">Create book</button>
+<h3>Create a new Post on Blog</h3>
+<form method="POST" action="/posts/new">
+  <input name="title" type="text" placeholder="Post's Title" />
+  <input name="contentPost" type="text" placeholder="Content" />
+  <button type="submit">Create Post</button>
 </form>
 
 <h3>These are all our books:</h3>
 <ul>
-  {{#each books}}
+  {{#each posts}}
   <li>
-    <p class="book-name">{{this.name}} - {{this.year}}</p><a href="books/{{this.id}}">Edit</a>
+    <p class="book-name">{{this.title}} - {{this.contentPost}}</p><a href="posts/{{this.id}}">Edit</a>
   </li>
   {{/each}}
 </ul>
