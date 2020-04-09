@@ -6,7 +6,6 @@ const login = (req, res, next) => {
       const error = new Error('There was an error login in')
       return next(error)
     }
-
     res.status(200).json({ token: `Bearer ${token}` })
   })(req, res, next)
 }

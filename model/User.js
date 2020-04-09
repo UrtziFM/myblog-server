@@ -5,31 +5,10 @@ const { Schema, model } = mongoose
 
 const userSchema = new Schema(
   {
-    user: String,
-    password: String,
-    name: String,
-    email: String,
- gender: {
-    type: String,
-    enum: ['Man', 'Woman', 'Boy', 'Girl', 'Not matter']
-  },
-  date: { type: Date, default: Date.now() },
-  age: Number
-},{
-    toJSON: {
-      // doc is the document in the db, ret is the object transformation to json
-      // This will let us configure the json obtained as a response
-      transform: (doc, ret) => {
-        ret.id = doc._id
-
-        delete ret._id
-        delete ret.createdAt
-        delete ret.updatedAt
-        delete ret.__v
-
-        return ret
-      }
-    },
+    email: { type: String, required: true },
+    password: { type: String, required: true }
+},
+  {
     timestamps: true
   }
 )

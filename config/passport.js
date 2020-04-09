@@ -11,12 +11,12 @@ const jwtSecret = process.env.JWT_SECRET
 passport.use(
   'register',
   new LocalStrategy(
-    { usernameField: 'user', passwordField: 'password', session: false },
-    (user, password, done) => {
-      User.findOne({ user })
+    { usernameField: 'email', passwordField: 'password', session: false },
+    (email, password, done) => {
+      User.findOne({ email })
         .then(user => {
           if (user) {
-            const err = new Error('There is already an User registered with this name')
+            const err = new Error('There is already an User registered with this email')
             return done(err, null)
           }
 
@@ -31,13 +31,8 @@ passport.use(
               }
 
               const newUser = new User({
-                user,
-                password: encryptedPass,
-                //name, 
-                //email,
-                //gender,
-                //date, 
-                //age
+                email,
+                password: encryptedPass
               })
 
               newUser
@@ -55,18 +50,18 @@ passport.use(
 passport.use(
   'login',
   new LocalStrategy(
-    { usernameField: 'user', passwordField: 'password', session: false },
-    (user, password, done) => {
-      User.findOne({ user })
+    { usernameField: 'email', passwordField: 'password', session: false },
+    (email, password, done) => {
+      User.findOne({ email })
         .then(user => {
           if (!user) {
-            const err = new Error('No user found with this name')
+            const err = new Error('No user found with this email')
             return done(err, null)
           }
 
           bcrypt.compare(password, user.password, (err, isMatch) => {
             if (err || !isMatch) {
-              const matchError = new Error('Incorrect user or password')
+              const matchError = new Error('Incorrect email or password')
               return done(matchError, null)
             }
 
