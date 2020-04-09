@@ -1,0 +1,9 @@
+
+<h3>These are all our Users:</h3>
+<ul>
+  {{#each users}}
+  <li>
+    <p class="book-name">{{this.email}} </p><a href="users/{{this.id}}">Edit</a>
+  </li>
+  {{/each}}
+</ul>

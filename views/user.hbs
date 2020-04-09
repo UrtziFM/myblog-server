@@ -1,0 +1,22 @@
+<h2>This is the profile of the user {{user.email}}</h2>
+
+<h3>DELETE User!</h3>
+{{!-- hbs does not support variables as arguments in functions, so we had to create the json helper --}}
+<button type="button" onclick="deleteUser({{ json user.id }})">Delete User</button>
+
+
+<script>
+  // When clicking the button, we receive the book id. After that, we'll send a delete fetch
+  // to /books/:id and after deleting, we'll redirect to /books page. In case of error,
+  // an alert will show communicating that to the user.
+  function deleteUser(userId) {
+    fetch(`/users/${userId}`, { method: 'DELETE' })
+      .then(res => res.json())
+      .then(() => {
+        window.location.replace('/users');
+      })
+      .catch((err) => {
+        alert('There was an error deleting the user!')
+      })
+  }
+</script>
