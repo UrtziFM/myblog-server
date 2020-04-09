@@ -22,7 +22,7 @@ const editUser = (req, res, next) => {
     const email = req.body.email
     const password = req.body.password
   
-    Book.findByIdAndUpdate(id, { email, password })
+    User.findByIdAndUpdate(id, { email, password })
       .then(() => {
         res.status(200).json('User updated!')
       })
