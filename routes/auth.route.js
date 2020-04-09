@@ -6,6 +6,10 @@ const { isPasswordValid } = require('../middlewares/isPasswordValid')
 
 const router = express.Router()
 
+router.get('/', function(req, res, next) {
+    res.render('access');
+  });
+
 router.get('/is-logged', [isAuthenticated], authController.isLoggedIn)
 
 router.post('/register', [isPasswordValid], authController.register)

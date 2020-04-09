@@ -33,11 +33,11 @@ passport.use(
               const newUser = new User({
                 user,
                 password: encryptedPass,
-                name, 
-                email,
-                gender,
-                date, 
-                age
+                //name, 
+                //email,
+                //gender,
+                //date, 
+                //age
               })
 
               newUser
