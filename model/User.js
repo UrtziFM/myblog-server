@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+
 
 // const Schema = mongoose.Schema and const model = mongoose.model can de declared with destructuring:
 const { Schema, model } = mongoose
@@ -28,6 +27,7 @@ const userSchema = new Schema(
 }
   
 )
+
 
 // A model is ALWAYS in uppercase and singular, mongoose will name the collection with lowercase and plural
 const User = model('User', userSchema) // Will be the books collection
