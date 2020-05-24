@@ -59,7 +59,7 @@ passport.use(
             return done(err, null)
           }
 
-          bcrypt.compare(password, User.password, (err, isMatch) => {
+          bcrypt.compare(password, user.password, (err, isMatch) => {
             if (err || !isMatch) {
               const matchError = new Error('Incorrect email or password')
               return done(matchError, null)

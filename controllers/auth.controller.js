@@ -19,6 +19,7 @@ const register = (req, res, next) => {
 
     login(req, res, next)
   })(req, res, next)
+  
 }
 
 const isLoggedIn = (req, res, next) => {
