@@ -26,6 +26,7 @@ passport.use(
             }
 
             bcrypt.hash(password, salt, (hashError, encryptedPass) => {
+              console.log(encryptedPass)
               if (hashError) {
                 return done(hashError, null)
               }
@@ -60,12 +61,15 @@ passport.use(
           }
 
           bcrypt.compare(password, user.password, (err, isMatch) => {
+            console.log(password)
             if (err || !isMatch) {
               const matchError = new Error('Incorrect email or password')
               return done(matchError, null)
             }
 
             jwt.sign({ id: user._id }, jwtSecret, { expiresIn: 36000 }, (jwtErr, token) => {
+              console.log(jwtSecret)
+              console.log(token)
               if (jwtErr || !token) {
                 const error = new Error('There was an unexpected error, try again later')
                 return done(error, null)
