@@ -8,9 +8,6 @@ const isAuthenticated = (req, res, next) => {
 
     next()
   })(req, res, next)
-  //{
-  //res.redirect('/posts');
-  //}
 }
 
 module.exports = {

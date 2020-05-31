@@ -10,7 +10,11 @@ const login = (req, res, next) => {
     }
     res.status(200).json({ token: `Bearer ${token}` })
   })(req, res, next)
+{
+  res.redirect('/posts')
 }
+}
+
 
 const register = (req, res, next) => {
   passport.authenticate('register', (err, user) => {
@@ -19,6 +23,7 @@ const register = (req, res, next) => {
       const error = new Error(err ? err.message : 'There was an error creating the user')
       return next(error)
     }
+    console.log('Hello1')
 
     login(req, res, next)
   })(req, res, next)
@@ -28,6 +33,7 @@ const register = (req, res, next) => {
 }
 
 const isLoggedIn = (req, res, next) => {
+  console.log('failed')
   res.status(200).json('User is logged in')
 }
 
