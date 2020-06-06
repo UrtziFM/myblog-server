@@ -9,10 +9,8 @@ const login = (req, res, next) => {
       return next(error)
     }
     res.status(200).json({ token: `Bearer ${token}` })
+    return
   })(req, res, next)
-{
-  res.redirect('/posts')
-}
 }
 
 
@@ -27,14 +25,16 @@ const register = (req, res, next) => {
 
     login(req, res, next)
   })(req, res, next)
-  {
-    res.redirect('/posts')
-  }
+ // {
+ //   res.redirect('/posts')
+ //   return
+ // }
 }
 
 const isLoggedIn = (req, res, next) => {
   console.log('failed')
   res.status(200).json('User is logged in')
+  return
 }
 
 module.exports = {

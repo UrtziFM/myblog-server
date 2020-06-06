@@ -79,7 +79,7 @@ passport.use(
                 return done(error, null)
               }
 
-              done(null, token)
+              return done(null, token)
             })
           })
         })
