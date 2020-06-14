@@ -20,12 +20,12 @@ passport.use(
             return done(err, null)
           }
 
-          bcrypt.genSalt(12, (err, salts) => {
+          bcrypt.genSalt(12, function(err, salt) {
             if (err) {
               return done(err, null)
             }
 
-            bcrypt.hash(password, salts, (hashError, encryptedPass) => {
+            bcrypt.hash(password, salt, (hashError, encryptedPass) => {
               if (hashError) {
                 return done(hashError, null)
               }
@@ -58,7 +58,6 @@ passport.use(
             const err = new Error('No user found with this email')
             return done(err, null)
           }
-
           bcrypt.compare(password, user.password, (err, isMatch) => {
             if (err || !isMatch) {
               const matchError = new Error('Incorrect email or password')
@@ -71,7 +70,7 @@ passport.use(
                 return done(error, null)
               }
 
-              done(null, token)
+              return done(null, token)
             })
           })
         })
