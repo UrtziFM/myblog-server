@@ -13,7 +13,6 @@ passport.use(
   new LocalStrategy(
     { usernameField: 'email', passwordField: 'password', session: false },
     (email, password, done) => {
-      console.log('register email')
       User.findOne({ email })
         .then(user => {
           if (user) {
@@ -22,13 +21,11 @@ passport.use(
           }
 
           bcrypt.genSalt(12, function(err, salt) {
-            console.log(salt)
             if (err) {
               return done(err, null)
             }
 
             bcrypt.hash(password, salt, (hashError, encryptedPass) => {
-              console.log(encryptedPass)
               if (hashError) {
                 return done(hashError, null)
               }
@@ -55,25 +52,19 @@ passport.use(
   new LocalStrategy(
     { usernameField: 'email', passwordField: 'password', session: false },
     (email, password, done) => {
-      console.log('login email')
       User.findOne({ email })
         .then(user => {
           if (!user) {
             const err = new Error('No user found with this email')
             return done(err, null)
           }
-          console.log('fuck')
           bcrypt.compare(password, user.password, (err, isMatch) => {
-            console.log(password)
-            console.log(user.password)
             if (err || !isMatch) {
               const matchError = new Error('Incorrect email or password')
               return done(matchError, null)
             }
 
             jwt.sign({ id: user._id }, jwtSecret, { expiresIn: 36000 }, (jwtErr, token) => {
-              console.log(jwtSecret)
-              console.log(token)
               if (jwtErr || !token) {
                 const error = new Error('There was an unexpected error, try again later')
                 return done(error, null)
