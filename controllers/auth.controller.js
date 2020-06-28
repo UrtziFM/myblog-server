@@ -8,7 +8,7 @@ const login = (req, res, next) => {
     }
     //res.status(200).json({ token: `Bearer ${token}` })
     else {
-    res.redirect('/posts')
+    res.redirect('http://localhost:3000/home')
     return}
   })(req, res, next)
 }
