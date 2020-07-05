@@ -31,7 +31,17 @@ hbs.registerHelper('json', context => {
   return JSON.stringify(context)
 })
 
-app.use(cors())
+//CORS middleware
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'content-type');
+
+  next();
+}
+
+app.use(cors());
+app.use(allowCrossDomain);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
