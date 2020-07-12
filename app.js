@@ -31,13 +31,29 @@ hbs.registerHelper('json', context => {
   return JSON.stringify(context)
 })
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,");
-  next();
-});
+//Cors middleware, making available it
+app.use(cors());
 
-//app.use(cors());
+const allowCors = {
+ methods: "GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS",
+ preflightContinue: true,
+ optionsSuccessStatus: 204,
+ origin: true,
+ credentials: true,
+ maxAge: 3600
+};
+
+app.options('https://localhost:3000/login', cors(allowCors))
+
+app.post('https://localhost:3000/login', cors(allowCors),function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for all origins!'})
+})
+
+app.listen(3002, function () {
+  console.log('CORS-enabled web server listening on port 3002')
+})
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
