@@ -1,13 +1,17 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const authController = require('../controllers/auth.controller')
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/ping', function(req, res, next) {
-  res.status(200).send('Server is alive')
-})
+router.route('/login')
+    .post(authController.authUser, authController.getToken);
+
+router.route('/verify')
+    .post(authController.verifyToken);
 
 module.exports = router;

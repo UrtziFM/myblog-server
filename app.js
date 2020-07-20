@@ -10,14 +10,11 @@ const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware')
 const hbs = require('hbs')
 
-const passport = require('passport')
-require('./config/passport')
 
 
 const indexRouter = require('./routes/index.route');
 const postsRouter = require('./routes/posts.route')
 const usersRouter = require('./routes/users.route')
-const authRouter = require('./routes/auth.route')
 
 
 const app = express();
@@ -35,15 +32,6 @@ hbs.registerHelper('json', context => {
 app.use(cors());
 
 
-app.options('*', cors()) // enable pre-flight request for DELETE request
-app.delete('*', cors(), function (req, res, next) {
-  res.json({msg: 'This is CORS-enabled for all origins!'})
-})
-
-app.listen(3002, function () {
-  console.log('CORS-enabled web server listening on port 80')
-})
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -59,13 +47,10 @@ app.use(
   })
 )
 app.use(express.static(path.join(__dirname, './public')));
-app.use(passport.initialize())
-app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/posts', postsRouter)
 app.use('/users', usersRouter)
-app.use('/auth', authRouter)
 
 
 // catch 404 and forward to error handler

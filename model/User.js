@@ -1,34 +1,46 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
 
-
-// const Schema = mongoose.Schema and const model = mongoose.model can de declared with destructuring:
-const { Schema, model } = mongoose
-
-const userSchema = new Schema(
-  {
-    email: { type: String, required: true },
-    password: { type: String, required: true }
-},{
-  toJSON: {
-    // doc is the document in the db, ret is the object transformation to json
-    // This will let us configure the json obtained as a response
-    transform: (doc, ret) => {
-      ret.id = doc._id
-
-      delete ret._id
-      delete ret.createdAt
-      delete ret.updatedAt
-      delete ret.__v
-
-      return ret
+const UserSchema = new Schema({
+    id: {
+        type: Number,
+        index: true,
+        unique: true,
+        require: true
+    },
+    email: {
+        type: String,
+        unique: true,
+        require: true
+    },
+    password: {
+        type: String,
+        require: true
     }
-  },
-  timestamps: true
-}
-  
-)
+});
 
+UserSchema.pre('save', async function (next) {
 
-// A model is ALWAYS in uppercase and singular, mongoose will name the collection with lowercase and plural
-const User = model('User', userSchema) // Will be the books collection
-module.exports = User
+    try {
+        if (this.id == undefined) {
+            let biggerId = -1;
+            const list = await User.find();
+            for (let doc of list) {
+                if (doc.id != undefined && biggerId < doc.id) {
+                    biggerId = doc.id;
+                }
+            }
+            this.id = ++biggerId;
+        }
+
+        if (this.password) this.password = await bcrypt.hash(this.password, 12);
+
+        next();
+    } catch (err) {
+        console.log(err);
+    }
+});
+
+const User = mongoose.model('user', UserSchema);
+module.exports = User;

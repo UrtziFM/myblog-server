@@ -1,37 +1,65 @@
-const passport = require('passport')
+const jwt = require('jsonwebtoken');
+const crudUsers = require('../config/user');
+const bcrypt = require('bcrypt');
+const SECRET = process.env.SECRET;
+let user;
 
-const login = (req, res, next) => {
-  passport.authenticate('login', (err, token) => {
-    if (err || !token) {
-      const error = new Error('There was an error login in')
-      return next(error)
+const authUser = async (req, res, next) => {
+    try {
+        console.log(req.body.data)
+        user = await crudUsers.findOneUserByEmail(req.body.data.email);
+        const result = await bcrypt.compare(req.body.data.password, user.password);
+        result ? next() : res.sendStatus(401);
+    } catch (err) {
+        console.log(err);
     }
-    //res.status(200).json({ token: `Bearer ${token}` })
-    else {
-    res.redirect('http://localhost:3000/home')
-    return}
-  })(req, res, next)
-}
+};
 
-
-const register = (req, res, next) => {
-  passport.authenticate('register', (err, user) => {
-    if (err || !user) {
-      const error = new Error(err ? err.message : 'There was an error creating the user')
-      return next(error)
+const getToken = (req, res) => {
+    try {
+        jwt.sign({
+            email: req.body.email,
+            password: req.body.password
+        }, SECRET, {expiresIn: '100000s'}, function (err, token) {
+            if (err) throw err;
+            res.json({
+                user: user ? user : null,
+                token: token
+            });
+            // next();
+        });
+    } catch (err) {
+        console.log(err);
     }
+};
 
-    login(req, res, next)
-  })(req, res, next)
-}
+const verifyToken = (req, res, next) => {
+    try {
+        const token = req.headers['authorization'].split("\"")[1];
 
-const isLoggedIn = (req, res, next) => {
-  res.status(200).json('User is logged in')
-  return
-}
+        if (token) {
+            console.log(req.headers);
+            jwt.verify(token, SECRET, (err, authData) => {
+                if (err) {
+                    console.log('err:' + err.name + '\nmessage:' + err.message);
+                    res.sendStatus(401);
+                } else {
+                    res.sendStatus(200);
+                    // res.send(authData);
+                    // next();
+                }
+            });
+        } else {
+            res.sendStatus(401);
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 module.exports = {
-  register,
-  login,
-  isLoggedIn
-}
+    authUser,
+    getToken,
+    verifyToken
+};
+
