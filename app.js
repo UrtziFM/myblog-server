@@ -34,23 +34,14 @@ hbs.registerHelper('json', context => {
 //Cors middleware, making available it
 app.use(cors());
 
-const allowCors = {
- methods: "GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS",
- preflightContinue: true,
- optionsSuccessStatus: 204,
- origin: true,
- credentials: true,
- maxAge: 3600
-};
 
-app.options('https://localhost:3000/login', cors(allowCors))
-
-app.post('https://localhost:3000/login', cors(allowCors),function (req, res, next) {
+app.options('*', cors()) // enable pre-flight request for DELETE request
+app.delete('*', cors(), function (req, res, next) {
   res.json({msg: 'This is CORS-enabled for all origins!'})
 })
 
 app.listen(3002, function () {
-  console.log('CORS-enabled web server listening on port 3002')
+  console.log('CORS-enabled web server listening on port 80')
 })
 
 
